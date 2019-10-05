@@ -18,6 +18,25 @@ const profileSchema = new mongoose.Schema({
   },
   driverLicence: {
     type: String
+  },
+  car_modele: {
+    type: String
+  },
+  car_plateNum: {
+    type: String
+  },
+
+  discussion: {
+    type: String
+  },
+  smoke: {
+    type: String
+  },
+  music: {
+    type: String
+  },
+  ponctuality: {
+    type: String
   }
 });
 module.exports = Profile = mongoose.model('profile', profileSchema);

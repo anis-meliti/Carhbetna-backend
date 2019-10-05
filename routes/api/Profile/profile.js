@@ -14,7 +14,19 @@ router.get('/', auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user.id }).populate(
       'user',
-      ['lastName', 'name', 'mail', 'avatar']
+      [
+        'lastName',
+        'name',
+        'mail',
+        'avatar',
+        'driverLicence',
+        'discussion',
+        'ponctuality',
+        'music',
+        'smoke',
+        'car_modele',
+        'car_plateNum'
+      ]
     );
     !profile
       ? res.status(400).json({ msg: 'there is no profile for this user' })
@@ -47,7 +59,19 @@ router.post(
     const errors = validationResult(req);
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
-    const { gender, numTel, birthDate, miniBio, driverLicence } = req.body;
+    const {
+      gender,
+      numTel,
+      birthDate,
+      miniBio,
+      driverLicence,
+      discussion,
+      ponctuality,
+      music,
+      smoke,
+      car_modele,
+      car_plateNum
+    } = req.body;
     const profileFields = {};
     profileFields.user = req.user.id;
     if (numTel) profileFields.numTel = numTel;
@@ -55,6 +79,14 @@ router.post(
     if (miniBio) profileFields.miniBio = miniBio;
     if (driverLicence) profileFields.driverLicence = driverLicence;
     if (gender) profileFields.gender = gender;
+    if (smoke) profileFields.smoke = smoke;
+    if (music) profileFields.discussion = music;
+    if (ponctuality) profileFields.ponctuality = ponctuality;
+    if (discussion) profileFields.discussion = discussion;
+    if (car_modele) profileFields.car_modele = car_modele;
+    if (car_plateNum) profileFields.car_plateNum = car_plateNum;
+
+    console.log('TCL: profileFields', profileFields);
     try {
       let profile = await Profile.findOne({ user: req.user.id });
       if (profile) {
